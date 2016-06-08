@@ -1,4 +1,4 @@
-#only pure knn
+#KNNimpute
 
 import numpy as np
 import math
@@ -24,7 +24,6 @@ class knn_impute:
 		return self.missposs[a][b]
 
 	def distance(self,n1,n2):
-		#print 'find dist btn',n1,'-',n2
 		if self.distlist[n1][n2]==0 and self.distlist[n2][n1]==0: 
 			distt = 0
 			cnt = 0
@@ -45,7 +44,6 @@ class knn_impute:
 			return distt2	
 		else:
 			return self.distlist[n1][n2]				#if distance is already computed before, then send it directly
-
 
 	def distance2(self,n1,n2):
 		#print 'find dist btn',n1,'-',n2
@@ -156,7 +154,6 @@ class knn_impute:
 		print '\n'
 		return finale
 
-
 def assign_missing():
 	for k in range(missindexes.shape[0]):
 		a = int(missindexes[k][0])
@@ -170,9 +167,7 @@ def replace_missing_with_mean(arr11):
 		ax = int(missindexes[k][0])
 		ay = int(missindexes[k][1])
 		new_data[ax][ay]=arr[ay]
-	#arr1 = np.copy(new_data)                                 
 	return new_data
-
 
 def write_back(finx,fname):
 	shp1 = finx.shape[0]
@@ -183,19 +178,3 @@ def write_back(finx,fname):
 			ofile.write(str(finx[j][k])+" ")
 		ofile.write("\n")
 	ofile.close()
-
-'''
-
-arr = np.loadtxt('snan.txt')
-missindexes = np.loadtxt('missing.txt')
-misspositions = np.zeros((arr.shape[0],arr.shape[1]))
-assign_missing()
-
-arr1 = replace_missing_with_mean(arr)
-
-clx = knn_impute(arr1,misspositions)
-
-hola = clx.predict_all()
-write_back(hola,'pred2.txt')
-
-'''
